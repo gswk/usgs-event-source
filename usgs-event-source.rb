@@ -59,7 +59,6 @@ end
 
 # Parse CLI flags
 opts = Optimist::options do
-    version "0.1"
     banner <<-EOS
 Poll USGS Real-Time Earthquake data
 
