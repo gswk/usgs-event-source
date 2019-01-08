@@ -21,21 +21,15 @@ def pull_hourly_earthquake(lastTime, sink)
 
     # Parse each reading and emit new ones as events
     j["features"].each do |f|
-        id = f["id"]
         time = f["properties"]["time"]
 
         if time > lastTime
-            datetime = DateTime.strptime(time.to_s,'%Q')
-            id = f["id"]
-            mag = f["properties"]["mag"]
-            long = f["geometry"]["coordinates"][0]
-            lat = f["geometry"]["coordinates"][1]
             msg = {
-                time: datetime,
-                id: id,
-                mag: mag,
-                lat: lat,
-                long: long
+                time: DateTime.strptime(time.to_s,'%Q'),
+                id: f["id"],
+                mag: f["properties"]["mag"],
+                lat: f["geometry"]["coordinates"][1],
+                long: f["geometry"]["coordinates"][0]
             }
 
             publish_event(msg, sink)
@@ -54,7 +48,8 @@ end
 # POST event to provided sink
 def publish_event(message, sink)
     @logger.info("Sending #{message[:id]} to #{sink}")
-    r = HTTParty.post(sink, :headers => {'Content-Type'=>'application/json'}, :body => message.to_json)
+    puts message.to_json
+    r = HTTParty.post(sink, :headers => {'Content-Type'=>'text/plain'}, :body => message.to_json)
     
     if r.code != 200
         @logger.error("Error! #{r}")
