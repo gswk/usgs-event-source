@@ -10,7 +10,7 @@ $stdout.sync = true
 
 # Poll the USGS feed for real-time earthquake readings
 def pull_hourly_earthquake(lastTime, sink)
-    # Get all detected earthquakes in the lasthour
+    # Get all detected earthquakes in the last hour
     url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson"
     response = HTTParty.get(url)
     j = JSON.parse(response.body)
