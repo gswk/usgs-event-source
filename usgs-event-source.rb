@@ -64,7 +64,7 @@ opts = Optimist::options do
 Poll USGS Real-Time Earthquake data
 
 Usage:
-  ruby gcp_adapter.rb 
+  ruby usgs-event-source.rb
 
 EOS
     opt :interval, "How often to poll USGS data (in seconds)", :default => 10
