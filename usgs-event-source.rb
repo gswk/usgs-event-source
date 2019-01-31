@@ -50,7 +50,9 @@ end
 def publish_event(message, sink)
     @logger.info("Sending #{message[:id]} to #{sink}")
     puts message.to_json
-    r = HTTParty.post(sink, :headers => {'Content-Type'=>'text/plain'}, :body => message.to_json)
+    r = HTTParty.post(sink, 
+        :headers => {'Content-Type'=>'text/plain'}, 
+        :body => message.to_json)
     
     if r.code != 200
         @logger.error("Error! #{r}")
@@ -67,8 +69,10 @@ Usage:
   ruby usgs-event-source.rb
 
 EOS
-    opt :interval, "How often to poll USGS data (in seconds)", :default => 10
-    opt :sink, "Sink to send events", :default => "http://localhost:8080"
+    opt :interval, "Poll Frequenvy", 
+        :default => 10
+    opt :sink, "Sink to send events", 
+        :default => "http://localhost:8080"
 end
 
 # Begin polling USGS data
