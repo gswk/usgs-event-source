@@ -28,7 +28,8 @@ def pull_hourly_earthquake(lastTime, sink)
             msg = {
                 time: DateTime.strptime(time.to_s,'%Q'),
                 id: f["id"],
-                mag: f["properties"]["mag"],
+                type: "quake",
+                measure: f["properties"]["mag"],
                 lat: f["geometry"]["coordinates"][1],
                 long: f["geometry"]["coordinates"][0]
             }
