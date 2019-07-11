@@ -52,7 +52,12 @@ def publish_event(message, sink)
     @logger.info("Sending #{message[:id]} to #{sink}")
     puts message.to_json
     r = HTTParty.post(sink, 
-        :headers => {'Content-Type'=>'text/plain'}, 
+        :headers => {
+            'Content-Type' => 'text/plain',
+            'ce-specversion' => '0.2',
+            'ce-type' => 'dev.knative.naturalevent.quake',
+            'ce-source' => 'dev.knative.usgs'
+        }, 
         :body => message.to_json)
     
     if r.code != 200
